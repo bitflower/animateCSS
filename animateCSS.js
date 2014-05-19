@@ -5,7 +5,7 @@
 
     $.fn.animateCSS = function (effect, callback, params) {
         
-        // Check if there were params hand over in the callback 
+        // Check if there were params handed over in the callback 
         if (callback && typeof callback !== "function") {
             params = callback
         }
@@ -13,11 +13,16 @@
         // Deal with params array  and set some default values
         var settings = $.extend({
             delay: 0,
-            animateClass: 'animated'
+            animateClass: 'animated',
+            lastCallbackOnly: false,
+            lastCallback: null
         }, params);
-        
+
+        // Global variables
+        var intLength = this.length;
+
         // Return this to maintain chainability
-        return this.each(function () {
+        return this.each(function (index) {
 
             // Cache $(this) for speed and compression
             var $this = $(this),
@@ -26,7 +31,7 @@
                 visibility = "visibility",
                 visible = "visible",
                 hidden = "hidden";
-
+            
             // Create a function we can call later
             function run() {
 
@@ -49,26 +54,49 @@
 
                 }
 
-                // Event triggered when the animation has finished
-                $this.bind( transitionEnd, function () {
+            }
 
-                    // Remove the classes so they can be added again later
-                    $this.removeClass(animated + " " + effect);
+            // Event triggered when the animation has finished
+            $this.bind(transitionEnd, function () {
 
-                    // Add a callback event
-                    if (typeof callback === "function") {
+                // Remove the classes so they can be added again later
+                $this.removeClass(animated + " " + effect);
 
-                        // Execute the callback
-                        callback.call(this);
+            });
 
-                        // Unbind the event handlers
-                        $this.unbind( transitionEnd );
+            // Check if callback is meant to run on every element or only on last
+            if (typeof callback === "function" && (settings.lastCallbackOnly == false || index == intLength - 1)) {//parseInt($this.data('index')) == intLength - 1 ) ) {
 
-                    }
+                $this.bind(transitionEnd, function () {
+
+                    // Execute the callback
+                    callback.call(this);
 
                 });
 
             }
+
+            // Check if callback is meant to run on every element or only on last
+            if (typeof settings.lastCallback === "function" && index == intLength - 1) { //parseInt($this.data('index')) == intLength - 1 ) ) {
+
+                $this.bind(transitionEnd, function () {
+
+                    // Execute the callback
+                    settings.lastCallback.call(this);
+
+                });
+
+            }
+
+            // Event triggered when the animation has finished
+            $this.bind(transitionEnd, function () {
+
+                // Unbind the event handlers
+                $this.unbind(transitionEnd);
+
+            });
+
+
 
             // Check if delay exists or if it"s a callback
             if (!settings.delay || settings.delay == 0) {
