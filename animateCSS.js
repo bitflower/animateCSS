@@ -65,7 +65,7 @@
             });
 
             // Check if callback is meant to run on every element or only on last
-            if (typeof callback === "function" && (settings.lastCallbackOnly == false || index == intLength - 1)) {//parseInt($this.data('index')) == intLength - 1 ) ) {
+            if (typeof callback === "function" && (settings.lastCallbackOnly == false || index == intLength - 1)) {
 
                 $this.bind(transitionEnd, function () {
 
@@ -77,7 +77,7 @@
             }
 
             // Check if callback is meant to run on every element or only on last
-            if (typeof settings.lastCallback === "function" && index == intLength - 1) { //parseInt($this.data('index')) == intLength - 1 ) ) {
+            if (typeof settings.lastCallback === "function" && index == intLength - 1) {
 
                 $this.bind(transitionEnd, function () {
 
