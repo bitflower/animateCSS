@@ -57,4 +57,22 @@ $(window).load( function(){
 });
 </pre>
 
+Additional options:
+
+lastCallbackOnly: The given callback will be fired after THE LAST matching element of the selector has ended it's animation.
+<pre>
+{ 
+    lastCallbackOnly : true
+}
+</pre>
+
+lastCallback: Optional, additional callback to be called when all animations on all mathing elements of the selector have ended their animation.
+<pre>
+{ 
+    lastCallback: function() {
+        // Code ....
+    }
+}
+</pre>
+
 Remember to use a .js (or .no-js depending on how you role) so that the element still displays for non javascript users (and Google previews).
