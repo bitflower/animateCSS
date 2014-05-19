@@ -59,7 +59,7 @@ $(window).load( function(){
 
 Additional options:
 
-lastCallbackOnly: The given callback will be fired after THE LAST matching element of the selector has ended it's animation.
+lastCallbackOnly: The given callback will be fired after THE LAST matching element of the selector has ended its animation.
 <pre>
 { 
     lastCallbackOnly : true
