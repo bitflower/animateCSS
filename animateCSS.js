@@ -76,7 +76,7 @@
 
             }
 
-            // Check if callback is meant to run on every element or only on last
+            // Check if lastCallback is meant to run
             if (typeof settings.lastCallback === "function" && index == intLength - 1) {
 
                 $this.bind(transitionEnd, function () {
