@@ -15,7 +15,8 @@
             delay: 0,
             animateClass: 'animated',
             lastCallbackOnly: false,
-            lastCallback: null
+            lastCallback: null,
+            transistionsSupported: true
         }, params);
 
         // Global variables
@@ -35,8 +36,10 @@
             // Create a function we can call later
             function run() {
 
-                // Add the animation effect with classes
-                $this.addClass( animated + " " + effect);
+                // Add the animation effect with classes if transistions are supported
+                if (settings.transistionsSupported) {
+                    $this.addClass(animated + " " + effect);
+                }
 
                 // Check if the elemenr has been hidden to start with
                 if ($this.css( visibility ) === hidden) {
@@ -52,6 +55,25 @@
                     // Show it
                     $this.show();
 
+                }
+
+                // Call callbacks immediately if transistions are not supported
+                if (!settings.transistionsSupported) {
+                    // Check if callback is meant to run on every element or only on last
+                    if (typeof callback === "function" && (settings.lastCallbackOnly == false || index == intLength - 1)) {
+
+                        // Execute the callback
+                        callback.call(this);
+
+                    }
+
+                    // Check if lastCallback is meant to run
+                    if (typeof settings.lastCallback === "function" && index == intLength - 1) {
+
+                        // Execute the callback
+                        settings.lastCallback.call(this);
+
+                    }
                 }
 
             }
